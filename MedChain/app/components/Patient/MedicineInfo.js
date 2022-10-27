@@ -10,15 +10,12 @@ import { HTTP_CLIENT_URL } from '../../url';
 
 const MedicineInfo = ({ route }) => {
   // console.log(route.params.paramKey)
-  const [element, setElement]=React.useState();
-  const [elementt, setElementt]=React.useState("{}");
-
+  const [element, setElement] = React.useState();
+  const [elementt, setElementt] = React.useState("{}");
   const navigation = useNavigation();
 
-  
-
-  React.useEffect(() =>{
-   fetch(`${HTTP_CLIENT_URL}/getFile`, {
+  React.useEffect(() => {
+    fetch(`${HTTP_CLIENT_URL}/getFile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,35 +25,25 @@ const MedicineInfo = ({ route }) => {
       const d1 = await res.json();
 
       if (d1.status == "ok") {
-        console.log("D: ",d1.data);
-        const newElement=d1.data;
-        
+        console.log("D: ", d1.data);
+        const newElement = d1.data;
+
         setElementt(newElement);
-        
+
       }
     });
 
-  },[route]);
+  }, [route]);
 
-  React.useEffect(() =>{
-
+  React.useEffect(() => {
     setElement(JSON.parse(elementt));
-    
-
-  },[elementt])
-
-
+  }, [elementt])
 
 
   React.useEffect(() => {
-  
     const backAction = () => {
-
-    navigation.goBack();
-     
+      navigation.goBack();
       return true;
-
-
     };
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
@@ -79,41 +66,72 @@ const MedicineInfo = ({ route }) => {
               style={styles.image}
             />
 
-            
-              
-                <Grid style={{ borderRadius: 20 }}>
-                 <Row style={styles.bordercolum}>
-                 <Col><Text style={{ fontWeight: 'bold' }}>Medicine Name:</Text></Col>
-                 <Col><Text>{element?.medicine}</Text></Col>
-               </Row>
-               <Row style={styles.bordercolum}>
-                 <Col><Text style={{ fontWeight: 'bold' }}>Dosage:</Text></Col>
-                 <Col><Text>{element?.dosage}</Text></Col>
-               </Row>
-               <Row style={styles.bordercolum} >
-                 <Col><Text style={{ fontWeight: 'bold' }}>No of Days:</Text></Col>
-                 <Col><Text>{element?.days}</Text></Col>
-               </Row>
-               <Row style={styles.bordercolum} >
-                 <Col><Text style={{ fontWeight: 'bold' }}>Diagnosis:</Text></Col>
-                 <Col><Text>{element?.diagnosis}</Text></Col>
-               </Row>
-               <Row style={styles.bordercolum} >
-                 <Col ><Text style={{ fontWeight: 'bold' }}>Date of Prescription:</Text></Col>
-                 <Col><Text>{element?.date}</Text></Col>
-               </Row>
-               </Grid>
 
+            <Grid style={{ borderRadius: 20 }}>
+              <Row style={styles.bordercolum}>
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Medicine Name:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.medicine}
+                  </Text>
+                </Col>
+              </Row>
 
-              
-             
-              {/* <Row style={styles.bordercolum} >
-                <Col><Text style={{fontWeight: 'bold'}}>Prescribed By:</Text></Col>
-                <Col><Text>{route.params.paramKey.doctor.name}</Text></Col>
-            </Row> */}
+              <Row style={styles.bordercolum}>
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Dosage:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.dosage}
+                  </Text>
+                </Col>
+              </Row>
 
+              <Row style={styles.bordercolum} >
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    No of Days:</Text></Col>
+                <Col>
+                  <Text>
+                    {element?.days}
+                  </Text>
+                </Col>
+              </Row>
 
-            
+              <Row style={styles.bordercolum} >
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Diagnosis:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.diagnosis}
+                  </Text>
+                </Col>
+              </Row>
+
+              <Row style={styles.bordercolum} >
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Date of Prescription:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.date}
+                  </Text>
+                </Col>
+              </Row>
+
+            </Grid>
 
           </View>
 

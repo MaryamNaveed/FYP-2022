@@ -11,12 +11,12 @@ const SignupPatient = () => {
     const [confirmpassword, setConfirmPassword] = React.useState("");
 
     const signup = () => {
-        console.log(name, ' ',email, ' ', password, ' ', confirmpassword)
+        console.log(name, ' ', email, ' ', password, ' ', confirmpassword)
         console.log('Sign up')
         navigation.navigate('MainPatient');
     }
 
-    const navigateToSignin = () =>{
+    const navigateToSignin = () => {
         navigation.navigate('SigninPatient');
     }
 
@@ -24,59 +24,78 @@ const SignupPatient = () => {
         navigation.navigate('ForgotPasswordPatient');
     }
 
-
-
     return (
         <View style={styles.container}>
-                <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{height: '100%'}}>
+            <ImageBackground
+                source={require('../../images/appBack.jpg')}
+                resizeMode="cover"
+                style={{ height: '100%' }}>
 
-            <Image
-                source={require('../../images/patient.jpg')}
-                style={styles.image}
-            />
-            <TextInput
-                label="Name"
-                value={name}
-                onChangeText={name => setName(name)}
-                style={styles.textfield}
-                keyboardType='email-address'
-            />
-            <TextInput
-                label="Email"
-                value={email}
-                onChangeText={email => setEmail(email)}
-                style={styles.textfield}
-                keyboardType='email-address'
-            />
-            <TextInput
-                label="Password"
-                secureTextEntry
-                style={styles.textfield}
-                value={password}
-                onChangeText={password => setPassword(password)}
-            />
+                <Image
+                    source={require('../../images/patient.jpg')}
+                    style={styles.image}
+                />
 
-            <TextInput
-                label="Confirm Password"
-                secureTextEntry
-                style={styles.textfield}
-                value={confirmpassword}
-                onChangeText={confirmpassword => setConfirmPassword(confirmpassword)}
-            />
+                <TextInput
+                    label="Name"
+                    value={name}
+                    onChangeText={name => setName(name)}
+                    style={styles.textfield}
+                    keyboardType='email-address'
+                />
 
-            <Button buttonColor='royalblue' style={styles.button} mode="contained" onPress={signup}>
-                <Text>Sign up</Text>
-            </Button>
+                <TextInput
+                    label="Email"
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                    style={styles.textfield}
+                    keyboardType='email-address'
+                />
 
-            <View style={styles.rowline}>
-                <Text style={styles.linktext} onPress={navigateToSignin}>Sign in</Text>
+                <TextInput
+                    label="Password"
+                    secureTextEntry
+                    style={styles.textfield}
+                    value={password}
+                    onChangeText={password => setPassword(password)}
+                />
 
-                <Text style={styles.linktext} onPress={navigateToForgetPassword}>Forgot Password?</Text>
-            </View>
+                <TextInput
+                    label="Confirm Password"
+                    secureTextEntry
+                    style={styles.textfield}
+                    value={confirmpassword}
+                    onChangeText={confirmpassword => setConfirmPassword(confirmpassword)}
+                />
+
+                <Button
+                    buttonColor='royalblue'
+                    style={styles.button}
+                    mode="contained"
+                    onPress={signup}>
+                    <Text>
+                        Sign up
+                    </Text>
+                </Button>
+
+                <View style={styles.rowline}>
+                    <Text
+                        style={styles.linktext}
+                        onPress={navigateToSignin}>
+                        Sign in
+                    </Text>
+
+                    <Text
+                        style={styles.linktext}
+                        onPress={navigateToForgetPassword}>
+                        Forgot Password?
+                    </Text>
+
+                </View>
 
 
             </ImageBackground>
-            
+
 
         </View>
     );
@@ -101,19 +120,19 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    button:{
+    button: {
         margin: 20
     },
-    linktext:{
+    linktext: {
         color: 'white',
         fontSize: 16,
         margin: 20
     },
-    rowline:{
+    rowline: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        
+
     }
 });
 

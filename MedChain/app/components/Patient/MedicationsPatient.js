@@ -3,7 +3,6 @@ import { ScrollView, View, StyleSheet, ImageBackground, BackHandler, TouchableOp
 import { Text, Card, Title, Surface, Paragraph, TextInput, DataTable, Button } from 'react-native-paper';
 import BackAppBar from '../BackAppBar';
 import { useNavigation } from '@react-navigation/native';
-// import { Grid, Row, Col } from 'react-native-paper-grid';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import '../../file';
@@ -14,6 +13,8 @@ const MedicationsPatient = () => {
   var counter = 0;
 
   const navigation = useNavigation();
+  const [elements, setElements] = React.useState([]);
+  const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
     counter = 0;
@@ -27,16 +28,12 @@ const MedicationsPatient = () => {
     return () => backHandler.remove();
   }, [])
 
-  const [elements, setElements] = React.useState([]);
-  const [search, setSearch] = React.useState('');
+
 
   React.useEffect(() => {
     counter = 0;
     getElements();
   }, [search])
-
-
-
 
 
   async function getElements() {
@@ -47,7 +44,7 @@ const MedicationsPatient = () => {
         console.log('present')
 
       }
-      else if(global.file[i].obj.path==='medication.json'){
+      else if (global.file[i].obj.path === 'medication.json') {
         elementsArr.push(global.file[i])
       }
 
@@ -88,7 +85,10 @@ const MedicationsPatient = () => {
   return (
     <View style={styles.container}>
       <BackAppBar message={"Medications"} />
-      <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{ height: '100%' }}>
+      <ImageBackground
+        source={require('../../images/appBack.jpg')}
+        resizeMode="cover"
+        style={{ height: '100%' }}>
         <ScrollView style={{ marginTop: 70 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
             <TextInput
@@ -99,28 +99,58 @@ const MedicationsPatient = () => {
               onChangeText={changed} />
           </View>
 
-
           <Grid style={{ marginTop: 30, marginHorizontal: 10 }}>
-
             <Col>
-              {/* <Row style={styles.bordered2}><Text style={{fontWeight: 'bold'}}>File</Text></Row> */}
               {
                 elements.map(element => (
 
+                  <Row
+                    style={styles.bordered}
+                    key={element.toString()}>
 
+                    <Col
+                      style={{
+                        backgroundColor: 'darkgray',
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                      size={1}>
 
-                  <Row style={styles.bordered} key={element.toString()}>
-                    <Col style={{ backgroundColor: 'darkgray', flex: 1, justifyContent: 'center', alignItems: 'center' }} size={1}>
-                      <Text style={{ padding: 10, fontSize: 18, color: 'white' }}>{++counter}</Text>
+                      <Text
+                        style={{
+                          padding: 10,
+                          fontSize: 18,
+                          color: 'white'
+                        }}>
+                        {++counter}
+                      </Text>
+
                     </Col>
-                    <Col style={{ height: '100%', justifyContent: 'center' }} size={4}>
-                      <TouchableOpacity mode="contained" onPress={() => navigation.navigate("MedicineInfo", { paramKey: element })}>
-                        <Text style={{ padding: 10, fontSize: 16 }}>{element}</Text>
+
+                    <Col
+                      style={{
+                        height: '100%',
+                        justifyContent: 'center'
+                      }}
+                      size={4}>
+
+                      <TouchableOpacity
+                        mode="contained"
+                        onPress={() => navigation.navigate("MedicineInfo", { paramKey: element })}>
+
+                        <Text
+                          style={{
+                            padding: 10,
+                            fontSize: 16
+                          }}>
+                          {element}
+                        </Text>
+
                       </TouchableOpacity>
                     </Col>
+                    
                   </Row>
-
-
 
                 )
                 )}

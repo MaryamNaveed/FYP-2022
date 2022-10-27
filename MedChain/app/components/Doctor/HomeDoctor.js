@@ -9,58 +9,72 @@ import { useNavigation } from '@react-navigation/native';
 const HomeDoctor = () => {
 
   const navigation = useNavigation();
+  const [elements, setElements] = React.useState([]);
 
-  const [elements,setElements]=React.useState([]);
+  React.useEffect(() => { getElements(); }, [])
 
-  React.useEffect(()=>{getElements();},[])
-
-  function getElements(){
-    var elementsArr=[
-      {key: 1, name: 'Add Medications', uri: require('../../images/medication.jpg'), click: 'AddMedications'},
-      {key: 2, name: 'Add Doctor Notes',uri: require('../../images/doctorNote.jpg'), click: 'AddDoctorNotes'},
-      {key: 3, name: 'Add Lab Results', uri: require('../../images/labResult.jpg'), click: 'AddLabResults'}
+  function getElements() {
+    var elementsArr = [
+      { key: 1, name: 'Add Medications', uri: require('../../images/medication.jpg'), click: 'AddMedications' },
+      { key: 2, name: 'Add Doctor Notes', uri: require('../../images/doctorNote.jpg'), click: 'AddDoctorNotes' },
+      { key: 3, name: 'Add Lab Results', uri: require('../../images/labResult.jpg'), click: 'AddLabResults' }
     ]
     setElements(elementsArr);
 
-    
+
   }
 
   return (
     <View style={styles.container}>
-      {/* <AppBar message={"Home"} /> */}
-      <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{height: '100%'}}>
-    <ScrollView >
-      
-      
-      <Text style={{ marginTop: 20, marginStart: 30, color:'white'}} variant="headlineMedium">Hi Doctor!</Text>
-      <View style={styles.rows}>
-      {
-          elements.map(element => (
-            <Surface key={element.key} style={styles.card} elevation={5} >
-              {/* <TouchableOpacity onPress={()=>navigation.navigate('Vitals')}> */}
-              <Card style={styles.maincard} onPress={()=>navigation.navigate(element.click)}>
-              <Card.Cover style={{ borderTopRightRadius: 30, borderTopLeftRadius: 30, height: 100}} resizeMode="contain" source={element.uri}/>
 
-          <Card.Content style={{ height: 80, justifyContent: 'center'}} >
-            <Title style={{ color: 'white'}}>{element.name}</Title>
-          </Card.Content>
-        </Card>
-              {/* </TouchableOpacity> */}
-        
+      <ImageBackground
+        source={require('../../images/appBack.jpg')}
+        resizeMode="cover"
+        style={{ height: '100%' }}>
+        <ScrollView >
 
-        </Surface>
-            
-          ))
-        }
-        
+          <Text
+            style={{ marginTop: 20, marginStart: 30, color: 'white' }}
+            variant="headlineMedium">
+            Hi Doctor!
+          </Text>
 
-       
-       
-      </View>
-      
-     
-    </ScrollView>
-    </ImageBackground>
+          <View style={styles.rows}>
+            {
+              elements.map(element => (
+                <Surface
+                  key={element.key}
+                  style={styles.card}
+                  elevation={5} >
+
+                  <Card
+                    style={styles.maincard}
+                    onPress={() => navigation.navigate(element.click)}>
+
+                    <Card.Cover
+                      style={{ borderTopRightRadius: 30, borderTopLeftRadius: 30, height: 100 }}
+                      resizeMode="contain"
+                      source={element.uri} />
+
+                    <Card.Content
+                      style={{ height: 80, justifyContent: 'center' }} >
+
+                      <Title
+                        style={{ color: 'white' }}>
+                        {element.name}
+                      </Title>
+
+                    </Card.Content>
+                  </Card>
+                </Surface>
+
+              ))
+            }
+
+          </View>
+
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 
@@ -72,7 +86,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   rows: {
- 
+
     margin: 10,
     display: 'flex',
     flex: 1,
@@ -89,14 +103,14 @@ const styles = StyleSheet.create({
     marginRight: 5,
     borderRadius: 30,
     textAlign: 'center'
-   
-  }, 
-  maincard:{
-    borderRadius: 30, 
-    backgroundColor: 'cornflowerblue',
-   
+
   },
-  
+  maincard: {
+    borderRadius: 30,
+    backgroundColor: 'cornflowerblue',
+
+  },
+
 
 });
 

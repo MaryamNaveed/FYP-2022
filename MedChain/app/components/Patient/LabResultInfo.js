@@ -5,21 +5,19 @@ import BackAppBar from '../BackAppBar';
 import { useNavigation } from '@react-navigation/native';
 import { Grid, Row, Col } from 'react-native-paper-grid';
 import '../../file';
-import {HTTP_CLIENT_URL} from '../../url';
+import { HTTP_CLIENT_URL } from '../../url';
 
 
-const LabResultsInfo = ({route}) => {
+const LabResultsInfo = ({ route }) => {
 
-   
-  const [element, setElement]=React.useState();
-  const [elementt, setElementt]=React.useState("{}");
+
+  const [element, setElement] = React.useState();
+  const [elementt, setElementt] = React.useState("{}");
 
   const navigation = useNavigation();
 
-  
-
-  React.useEffect(() =>{
-   fetch(`${HTTP_CLIENT_URL}/getFile`, {
+  React.useEffect(() => {
+    fetch(`${HTTP_CLIENT_URL}/getFile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,35 +27,24 @@ const LabResultsInfo = ({route}) => {
       const d1 = await res.json();
 
       if (d1.status == "ok") {
-        console.log("D: ",d1.data);
-        const newElement=d1.data;
-        
+        console.log("D: ", d1.data);
+        const newElement = d1.data;
         setElementt(newElement);
-        
+
       }
     });
 
-  },[route]);
+  }, [route]);
 
-  React.useEffect(() =>{
-
+  React.useEffect(() => {
     setElement(JSON.parse(elementt));
-    
-
-  },[elementt])
-
-
+  }, [elementt])
 
 
   React.useEffect(() => {
-  
     const backAction = () => {
-
-    navigation.goBack();
-     
+      navigation.goBack();
       return true;
-
-
     };
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
@@ -69,51 +56,80 @@ const LabResultsInfo = ({route}) => {
   return (
     <View style={styles.container}>
       <BackAppBar message={"Lab Result Details"} />
-      <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{height: '100%'}}>
-     <ScrollView style={{marginTop: 70}}>
-        <View style={{marginLeft: 20, marginRight: 20}}>
+      <ImageBackground
+        source={require('../../images/appBack.jpg')}
+        resizeMode="cover"
+        style={{ height: '100%' }}>
+        <ScrollView style={{ marginTop: 70 }}>
+          <View
+            style={{ marginLeft: 20, marginRight: 20 }}>
 
-
-        <Image
-                source={require('../../images/labResult.jpg')}
-                style={styles.image}
-                resizeMode='contain'
+            <Image
+              source={require('../../images/labResult.jpg')}
+              style={styles.image}
+              resizeMode='contain'
             />
 
-        <Grid style={{borderRadius: 20}}>
-          
-           
-            <Row style={styles.bordercolum}>
-                <Col ><Text style={{fontWeight: 'bold'}}>Name:</Text></Col>
-                <Col ><Text>{element?.testName}</Text></Col>
-            </Row>
-            <Row style={styles.bordercolum}>
-                <Col ><Text style={{fontWeight: 'bold'}}>Result:</Text></Col>
-                <Col ><Text>{element?.result}</Text></Col>
-            </Row>
-            <Row style={styles.bordercolum}>
-                <Col ><Text style={{fontWeight: 'bold'}}>Remark:</Text></Col>
-                <Col ><Text>{element?.remark}</Text></Col>
-            </Row>
-            <Row style={styles.bordercolum}>
-                <Col ><Text style={{fontWeight: 'bold'}}>Date of Test:</Text></Col>
-                <Col ><Text>{element?.date}</Text></Col>
-            </Row>
-        
-            {/* <Row style={styles.bordercolum}>
-                <Col ><Text style={{fontWeight: 'bold'}}>Doctor: </Text></Col>
-                <Col><Text>{route.params.paramKey.doctor.name}</Text></Col>
-            </Row> */}
+            <Grid style={{ borderRadius: 20 }}>
 
-           
-           
-        </Grid>
+              <Row style={styles.bordercolum}>
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Name:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.testName}
+                  </Text>
+                </Col>
+              </Row>
 
-        </View>
-      
-      </ScrollView> 
+              <Row style={styles.bordercolum}>
+                <Col>
+                <Text style={{ fontWeight: 'bold' }}>
+                  Result:
+                  </Text>
+                  </Col>
+                <Col>
+                <Text>
+                  {element?.result}
+                  </Text>
+                </Col>
+              </Row>
+
+              <Row style={styles.bordercolum}>
+                <Col>
+                <Text style={{ fontWeight: 'bold' }}>
+                  Remark:
+                  </Text>
+                  </Col>
+                <Col>
+                <Text>
+                  {element?.remark}
+                  </Text>
+                </Col>
+              </Row>
+
+              <Row style={styles.bordercolum}>
+                <Col>
+                  <Text style={{ fontWeight: 'bold' }}>
+                    Date of Test:
+                  </Text>
+                </Col>
+                <Col>
+                  <Text>
+                    {element?.date}
+                  </Text>
+                </Col>
+              </Row>
+
+            </Grid>
+          </View>
+
+        </ScrollView>
       </ImageBackground>
-     
+
     </View>
   );
 
@@ -124,10 +140,10 @@ const styles = StyleSheet.create({
     // backgroundColor: '#b0e0e6',
     height: '100%'
   },
-  texfield:{
+  texfield: {
     width: 220,
     marginEnd: 10,
-   
+
   },
   rows: {
     marginTop: 20
@@ -138,12 +154,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 20,
     textAlign: 'center',
-   
-  }, 
-  maincard:{
-    borderRadius: 20, 
+
+  },
+  maincard: {
+    borderRadius: 20,
     backgroundColor: 'whitesmoke',
-   
+
   },
   image: {
     marginLeft: 'auto',
@@ -153,8 +169,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 180,
     height: 180
-},
-bordercolum:{
+  },
+  bordercolum: {
     borderColor: 'black',
     minHeight: 70,
     borderWidth: 1,
@@ -163,25 +179,25 @@ bordercolum:{
     alignItems: 'center',
     alignContent: 'center',
     padding: 10
-},
-borderRight:{
+  },
+  borderRight: {
     borderRightColor: 'black',
     minHeight: 70,
     borderRightWidth: 1,
     justifyContent: 'center',
     backgroundColor: 'white',
     alignItems: 'center',
-},
-  borderLeft:{
+  },
+  borderLeft: {
     borderLeftColor: 'black',
     minHeight: 70,
     borderLeftWidth: 1,
     justifyContent: 'center',
     backgroundColor: 'white',
     alignItems: 'center',
-   
+
   }
-  
+
 
 });
 

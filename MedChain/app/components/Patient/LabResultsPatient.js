@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, ImageBackground, BackHandler,TouchableOpacity } from 'react-native';
+import { ScrollView, View, StyleSheet, ImageBackground, BackHandler, TouchableOpacity } from 'react-native';
 import { Text, Card, Title, Surface, Paragraph, TextInput, DataTable, Button } from 'react-native-paper';
 import BackAppBar from '../BackAppBar';
 import { useNavigation } from '@react-navigation/native';
@@ -9,31 +9,32 @@ import '../../file';
 
 const LabResultsPatient = () => {
 
-  var counter=0;
+  var counter = 0;
 
   const navigation = useNavigation();
+  const [elements, setElements] = React.useState([]);
+  const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
-    counter=0;
+    counter = 0;
     const backAction = () => {
-          navigation.goBack();
-            return true;
-  
+      navigation.goBack();
+      return true;
+
 
     };
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-}, [])
+  }, [])
 
-const [elements,setElements]=React.useState([]);
-const [search,setSearch]=React.useState('');
 
-  React.useEffect(()=>{
-    counter=0;
+
+  React.useEffect(() => {
+    counter = 0;
     getElements();
-  },[search])
+  }, [search])
 
-  function getElements(){
+  function getElements() {
     var elementsArr = []
 
     for (i = 0; i < global.file.length; i++) {
@@ -41,7 +42,7 @@ const [search,setSearch]=React.useState('');
         console.log('present')
 
       }
-      else if(global.file[i].obj.path==='labResult.json'){
+      else if (global.file[i].obj.path === 'labResult.json') {
         elementsArr.push(global.file[i])
       }
 
@@ -63,73 +64,98 @@ const [search,setSearch]=React.useState('');
         newArr.push(elementsArr[i].hash);
       }
 
-
     }
 
     setElements(newArr);
 
-
-    
   }
 
-  const changed = (text) =>{
+  const changed = (text) => {
     setSearch(text);
     console.log(text);
-    
+
   }
-  
+
 
   return (
     <View style={styles.container}>
       <BackAppBar message={"Lab Results"} />
-      <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{height: '100%'}}>
-      <ScrollView style={{marginTop: 70}}>
-      <View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
-      <TextInput 
-        style={styles.texfield} 
-        placeholder='Search...' 
-        mode='outlined' 
-        value={search}
-        onChangeText={changed} />
-      </View>
+      <ImageBackground
+        source={require('../../images/appBack.jpg')}
+        resizeMode="cover"
+        style={{ height: '100%' }}>
+        <ScrollView style={{ marginTop: 70 }}>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}>
+
+            <TextInput
+              style={styles.texfield}
+              placeholder='Search...'
+              mode='outlined'
+              value={search}
+              onChangeText={changed} />
+
+          </View>
 
 
-      <Grid style={{marginTop: 30, marginHorizontal: 10}}>
+          <Grid
+            style={{
+              marginTop: 30,
+              marginHorizontal: 10
+            }}>
 
-      <Col>
-      {/* <Row style={styles.bordered2}><Text style={{fontWeight: 'bold'}}>File</Text></Row> */}
-      {
-          elements.map(element => (
+            <Col>
+              {
+                elements.map(element => (
+                  <Row
+                    style={styles.bordered}
+                    key={element.toString()}>
 
-        
-      
-            <Row style={styles.bordered} key={element.toString()}>
-            <Col style={{backgroundColor: 'darkgray',flex: 1, justifyContent: 'center', alignItems: 'center'}} size={1}>
-            <Text style={{padding: 10, fontSize: 18, color: 'white'}}>{++counter}</Text>
+                    <Col
+                      style={{
+                        backgroundColor: 'darkgray',
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                      size={1}>
+                      <Text style={{ padding: 10, fontSize: 18, color: 'white' }}>{++counter}</Text>
+                    </Col>
+
+                    <Col
+                      style={{
+                        height: '100%',
+                        justifyContent: 'center'
+                      }}
+                      size={4}>
+                      <TouchableOpacity
+                        mode="contained"
+                        onPress={() => navigation.navigate("LabResultInfo", { paramKey: element })}>
+                        <Text
+                          style={{
+                            padding: 10,
+                            fontSize: 16
+                          }}>
+                          {element}
+                        </Text>
+                      </TouchableOpacity>
+                    </Col>
+                    
+                  </Row>
+
+                )
+                )}
             </Col>
-            <Col style={{height: '100%', justifyContent: 'center'}}  size={4}>
-          <TouchableOpacity mode="contained" onPress={() => navigation.navigate("LabResultInfo", { paramKey: element })}>
-                 <Text style={{padding: 10, fontSize:16}}>{element}</Text>
-              </TouchableOpacity>
-              </Col>
-          </Row>
-       
-       
-       
-          )
-)}
-</Col>
+          </Grid>
 
-
-
-</Grid>
-   
-
-    
-      
-      </ScrollView> 
+        </ScrollView>
       </ImageBackground>
-     
+
     </View>
   );
 
@@ -140,9 +166,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#b0e0e6',
     height: '100%'
   },
-  texfield:{
+  texfield: {
     width: '90%'
-   
+
   },
   rows: {
     marginTop: 20
@@ -153,12 +179,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 20,
     textAlign: 'center',
-   
-  }, 
-  maincard:{
-    borderRadius: 20, 
+
+  },
+  maincard: {
+    borderRadius: 20,
     backgroundColor: 'whitesmoke',
-   
+
   },
   bordered1: {
     borderColor: 'lightgray',
@@ -170,19 +196,19 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     alignItems: 'center',
     flex: 1
-    
+
   },
   bordered: {
     minHeight: 60,
     backgroundColor: 'white',
-    borderWidth: 1, 
-    borderColor: 'lightgray', 
+    borderWidth: 1,
+    borderColor: 'lightgray',
     width: '100%',
     alignSelf: 'center',
     justifyContent: 'center',
-  
-    
-    
+
+
+
   },
   bordered2: {
     borderColor: 'lightgray',
@@ -190,11 +216,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     backgroundColor: 'lightblue',
-    
+
     alignItems: 'center'
-    
+
   }
-  
+
 
 });
 export default LabResultsPatient;

@@ -3,68 +3,32 @@ import { ScrollView, View, StyleSheet, Image, BackHandler, ImageBackground } fro
 import { Text, Portal, TextInput, Provider, Modal, Button } from 'react-native-paper';
 import BackAppBar from '../BackAppBar';
 import { useNavigation } from '@react-navigation/native';
-
-// import DateTimePicker from '@react-native-community/datetimepicker';
-// import DatePicker from 'react-native-datepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DocumentPicker from 'react-native-document-picker';
 import '../../file';
-import {HTTP_CLIENT_URL} from '../../url';
-// import {create, CID, IPFSHTTPClient} from 'ipfs-http-client';
+import { HTTP_CLIENT_URL } from '../../url';
 
-// import * as IPFS from 'ipfs-mini';
-import { create } from 'ipfs-http-client';
-
-
-// // connect to the default API address http://localhost:5001
 
 
 
 
 const AddMedications = () => {
 
+  // declaring variables
   const navigation = useNavigation();
-
   const [medicine, setMedicine] = React.useState("");
   const [modalVisible, setModalVisible] = React.useState(false);
-
   const [patient, setPatient] = React.useState("");
   const [days, setDays] = React.useState();
-
   const [diagnosis, setDiagnosis] = React.useState("");
   const [dosage, setDosage] = React.useState("");
-
   const [date, setDate] = React.useState('');
   const [dateInput, setDateInput] = React.useState('');
+  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
 
-  const [fileResponse, setFileResponse] = React.useState([]);
-
-  // let ipfss=[];
-
-
- 
-  async function add(){
-
-    // const client = await create()
-
-    // const IPFS = require('ipfs-mini');
-
-    // try {
-    //   ipfss = create({
-    //     host: "10.0.2.2",
-    //           port: 5001,
-    //           protocol: "http"
-  
-    //   });
-    // } catch (error) {
-    //   console.error("IPFS error ", error);
-    //   ipfss = [];
-    // }
-
-    
-// console.log(ipfs);
-
-    // console.log(JSON.stringify({ patient, medicine, dosage, days, diagnosis, date, file: 'medication.json' }))
+  //function to be called on pressing add button
+  async function add() {
+    //calling API for uploading File and passing details to be added to file in body
     const response = fetch(`${HTTP_CLIENT_URL}/uploadFile`, {
       method: 'POST',
       headers: {
@@ -72,73 +36,75 @@ const AddMedications = () => {
       },
       body: JSON.stringify({ patient, medicine, dosage, days, diagnosis, date, file: 'medication.json' }),
     }).then(async res => {
-
+      //On Sucessufully returning from API collect response
       const d = await res.json();
+      h = d.hashValue;
 
-      h=d.hashValue;
-    
-      
-    if(d.status=="ok"){
-      console.log(d);
-      newFile={hash: d.hashValue, obj: d.result}
-      global.file.push(newFile);
-      console.log(global.file)
-
-      setModalVisible(true);
-    }
-    else{
-      console.log(d)
-    }
-
-
+       //checking if the response has status ok
+      if (d.status == "ok") {
+        console.log(d);
+         //if response is okay then create an object of the hash value of file returned
+        newFile = { hash: d.hashValue, obj: d.result }
+        // add the object to file array
+        global.file.push(newFile);
+        console.log(global.file)
+        //making ModalVisible true to display the modal that medicine is added
+        setModalVisible(true);
+      }
+      else {
+        console.log(d)
+      }
     });
-
   }
 
-
-
+  //function to be called on closing modal displaying medicine is added
   const ok = () => {
+    //making ModalVisible false to hide the modal that medicine is added
     setModalVisible(false);
+    //navigates to doctor home page
     navigation.navigate('MainDoctor');
   }
 
-  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
-
+  //function to be called on pressing in the date text field
   const showDatePicker = () => {
+    //making DatePickerVisibility true to display the modal for selecting date and time
     setDatePickerVisibility(true);
   };
 
+  //function to be called on cancelling the date modal
   const hideDatePicker = () => {
+    //making DatePickerVisibility false to hide the modal for selecting date and time
     setDatePickerVisibility(false);
   };
 
+  //function to be called after selecting the date
   const handleConfirm = (date) => {
     setDate('');
     hideDatePicker();
     console.log(date);
 
+    //check if the date is selected or not
     if (date !== "") {
       console.log(date);
+      //if date is selected convert date to string
       let newDate = new Date(date).toString();
       setDate(newDate);
       console.log(newDate);
+      //set the string date in text field
       setDateInput(newDate);
     }
     else {
+      // if date is not selected then set string '' in date text field
       setDateInput('');
     }
   };
 
 
   React.useEffect(() => {
-
-
-
+    //handle back button pressed
     const backAction = () => {
       navigation.goBack();
       return true;
-
-
     };
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
@@ -149,22 +115,36 @@ const AddMedications = () => {
   return (
     <Provider>
       <Portal>
-        <Modal visible={modalVisible} onDismiss={ok} contentContainerStyle={styles.modalAge}>
+        <Modal
+          visible={modalVisible}
+          onDismiss={ok}
+          contentContainerStyle={styles.modalAge}>
+            
           <View>
 
-            <Text style={{ margin: 10, textAlign: 'center' }}>Medication added successfully!</Text>
+            <Text
+              style={{ margin: 10, textAlign: 'center' }}>
+              Medication added successfully!
+            </Text>
 
-
-            <Button mode='contained' buttonColor='#00ced1' style={styles.okbutton} onPress={ok}>Ok</Button>
+            <Button
+              mode='contained'
+              buttonColor='#00ced1'
+              style={styles.okbutton}
+              onPress={ok}>
+              Ok
+            </Button>
           </View>
-
 
         </Modal>
       </Portal>
 
       <View style={styles.container}>
         <BackAppBar message={"Add Medications"} />
-        <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{ height: '100%' }}>
+        <ImageBackground
+          source={require('../../images/appBack.jpg')}
+          resizeMode="cover"
+          style={{ height: '100%' }}>
           <ScrollView style={{ marginTop: 60 }}>
 
             <Image
@@ -200,7 +180,6 @@ const AddMedications = () => {
               style={styles.textfield}
             />
 
-
             <TextInput
               label="Diagnosis"
               value={diagnosis}
@@ -208,7 +187,6 @@ const AddMedications = () => {
               style={styles.textfield}
             />
 
-          
             <TextInput
               label="Date"
               style={styles.textfield}
@@ -216,7 +194,6 @@ const AddMedications = () => {
               onPressIn={showDatePicker}
 
             />
-           
 
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -225,15 +202,9 @@ const AddMedications = () => {
               onCancel={hideDatePicker}
             />
 
-
-
             <Button buttonColor='royalblue' style={styles.button} mode="contained" onPress={add}>
               <Text style={{ color: 'white' }}>Add</Text>
             </Button>
-
-
-
-
 
           </ScrollView>
         </ImageBackground>
@@ -311,8 +282,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginStart: 20,
     marginTop: 10
-
-
   },
 
 });

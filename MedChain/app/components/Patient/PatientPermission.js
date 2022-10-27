@@ -9,17 +9,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GrantPermissionPatient from './GrantPermissionPatient';
 
 
-function ViewPermissions () {
+function ViewPermissions() {
   console.log('View')
-  return(
-  <ViewPermissionPatient />);
+  return (
+    <ViewPermissionPatient />);
 };
 
 
-function AddPermissions(){
+function AddPermissions() {
   console.log('Add')
-  return(
-  <AddPermissionPatient />);
+  return (
+    <AddPermissionPatient />);
 };
 
 
@@ -27,34 +27,34 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function PatientPermission() {
-  
+
   return (
     <NavigationContainer independent={true}>
-    
-      {/* <AppBar message={"My Permissions"} /> */}
-      <Tab.Navigator screenOptions={{
-         tabBarActiveTintColor: 'white',
-          tabBarStyle:{
-                //  backgroundColor: '#b0e0e6',
-                backgroundColor: 'royalblue'
-           },
-           
-         }} >
+
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: 'white',
+          tabBarStyle: {
+            //  backgroundColor: '#b0e0e6',
+            backgroundColor: 'royalblue'
+          },
+
+        }} >
         <Tab.Screen name="View Permissions" component={ViewPermissions} />
         <Tab.Screen name="Add Permissions" component={AddPermissions} />
       </Tab.Navigator>
     </NavigationContainer>
-  
+
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      // backgroundColor: '#b0e0e6',
-      backgroundColor: 'cornflowerblue',
-      height: '100%'
-    },
-    
-  
-  });
+  container: {
+    // backgroundColor: '#b0e0e6',
+    backgroundColor: 'cornflowerblue',
+    height: '100%'
+  },
+
+
+});
 

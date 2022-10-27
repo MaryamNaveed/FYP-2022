@@ -10,13 +10,13 @@ const SigninPatient = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const signin = () =>{
+    const signin = () => {
         console.log(email, ' ', password)
         console.log('Sign in')
         navigation.navigate('MainPatient');
     }
 
-    const navigateToSignup = () =>{
+    const navigateToSignup = () => {
         navigation.navigate('SignupPatient');
     }
 
@@ -27,38 +27,57 @@ const SigninPatient = () => {
 
     return (
         <View style={styles.container}>
-            <ImageBackground source={require('../../images/appBack.jpg')} resizeMode="cover" style={{height: '100%'}}>
-            <Image
-                source={require('../../images/patient.jpg')}
-                style={styles.image}
-            />
-            <TextInput
-                label="Email"
-                value={email}
-                onChangeText={email => setEmail(email)}
-                style={styles.textfield}
-                keyboardType='email-address'
-            />
-            <TextInput
-                label="Password"
-                secureTextEntry
-                style={styles.textfield}
-                value={password}
-                onChangeText={password => setPassword(password)}
-            />
+            <ImageBackground
+                source={require('../../images/appBack.jpg')}
+                resizeMode="cover"
+                style={{ height: '100%' }}>
+                <Image
+                    source={require('../../images/patient.jpg')}
+                    style={styles.image}
+                />
 
-            <Button buttonColor='royalblue' style={styles.button} mode="contained" onPress={signin}>
-                <Text>Sign in</Text>
-            </Button>
+                <TextInput
+                    label="Email"
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                    style={styles.textfield}
+                    keyboardType='email-address'
+                />
 
-            <View style={styles.rowline}>
-                <Text style={styles.linktext} onPress={navigateToSignup}>Sign up</Text>
+                <TextInput
+                    label="Password"
+                    secureTextEntry
+                    style={styles.textfield}
+                    value={password}
+                    onChangeText={password => setPassword(password)}
+                />
 
-                <Text style={styles.linktext} onPress={navigateToForgetPassword}>Forgot Password?</Text>
-            </View>
+                <Button
+                    buttonColor='royalblue'
+                    style={styles.button}
+                    mode="contained"
+                    onPress={signin}>
+                    <Text>
+                        Sign in
+                    </Text>
+                </Button>
+
+                <View style={styles.rowline}>
+                    <Text
+                        style={styles.linktext}
+                        onPress={navigateToSignup}>
+                        Sign up
+                    </Text>
+
+                    <Text
+                        style={styles.linktext}
+                        onPress={navigateToForgetPassword}>
+                        Forgot Password?
+                    </Text>
+                </View>
 
             </ImageBackground>
-            
+
 
         </View>
     );
@@ -83,21 +102,21 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    button:{
+    button: {
         margin: 20
     },
-    linktext:{
+    linktext: {
         color: 'white',
         fontSize: 16,
         marginHorizontal: 20,
         marginTop: 10,
         marginBottom: 10
     },
-    rowline:{
+    rowline: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        
+
     }
 });
 
