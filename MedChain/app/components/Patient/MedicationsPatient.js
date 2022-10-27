@@ -10,14 +10,15 @@ import '../../file';
 
 const MedicationsPatient = () => {
 
+  //declaring variables
   var counter = 0;
-
   const navigation = useNavigation();
   const [elements, setElements] = React.useState([]);
   const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
     counter = 0;
+    //handle back button
     const backAction = () => {
       navigation.goBack();
       return true;
@@ -32,13 +33,16 @@ const MedicationsPatient = () => {
 
   React.useEffect(() => {
     counter = 0;
+    //if text in search field changes then again find the required files
     getElements();
   }, [search])
 
 
+  //get files function
   async function getElements() {
     var elementsArr = []
 
+    //get all medication files
     for (i = 0; i < global.file.length; i++) {
       if (elementsArr.includes(global.file[i])) {
         console.log('present')
@@ -54,6 +58,7 @@ const MedicationsPatient = () => {
 
     var newArr = []
 
+    //get all files having hash that includes text present in search field
     for (var i = 0; i < elementsArr.length; i++) {
       console.log(newArr)
       if (newArr.includes(elementsArr[i].hash)) {
@@ -69,12 +74,14 @@ const MedicationsPatient = () => {
 
     }
 
+    //set Elements equal to newArr
     setElements(newArr);
 
 
 
   }
 
+  //function called when text of search field is changed
   const changed = (text) => {
     setSearch(text);
     console.log(text);
